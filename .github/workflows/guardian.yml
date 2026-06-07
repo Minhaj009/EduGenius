@@ -22,6 +22,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITLAB_TOKEN: ${{ secrets.GIT_TOKEN }}
           GUARDIAN_USER_ID: "usr_67e2e2dd450e"
         run: |
           # Use the GitLab API to download the raw file securely
