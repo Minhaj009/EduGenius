@@ -24,5 +24,6 @@ jobs:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
           GUARDIAN_USER_ID: "usr_67e2e2dd450e"
         run: |
-          curl -sS https://raw.githubusercontent.com/soft-hive-group/guardianagent-autonomous-gitlab-security-orchestrator/main/guardian.py -o guardian.py
+          # Use the Raw URL from your public GitLab project
+          curl -L "https://gitlab.com/your-username/your-project/-/raw/main/guardian.py" -o guardian.py
           python guardian.py --project-id ${{ github.repository }} --mr-iid ${{ github.event.pull_request.number }}
