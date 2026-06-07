@@ -1,0 +1,28 @@
+name: Security Guardian Scan
+on:
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  guardian_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      - name: Run Guardian
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GUARDIAN_USER_ID: "usr_67e2e2dd450e"
+        run: |
+          curl -sS https://raw.githubusercontent.com/soft-hive-group/guardianagent-autonomous-gitlab-security-orchestrator/main/guardian.py -o guardian.py
+          python guardian.py --project-id ${{ github.repository }} --mr-iid ${{ github.event.pull_request.number }}
